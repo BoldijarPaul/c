@@ -3,11 +3,17 @@
 
 typedef struct
 {
-    expanditure expanditures[1000];
+    expanditure expanditures[100];
     int length;
 }repository;
 
 
+repository createRepo()
+{
+    repository repository;
+    repository.length=0;
+//    repository.expanditures=malloc(sizeof(expanditure) * 10);
+}
 /* removes the item at the position wanted
     returns 1 if sucessfull, 0 if not
 */
