@@ -3,44 +3,69 @@
 
 typedef struct
 {
-    expanditure expanditures[100];
+    expanditure *expanditures;
     int length;
+}vect;
+
+typedef struct
+{
+    vect v;
 }repository;
 
-
+vect createVect()
+{
+    vect v;
+    v.length=0;
+    v.expanditures=malloc(sizeof(expanditure) * 10);
+    return v;
+}
 repository createRepo()
 {
     repository repository;
-    repository.length=0;
-//    repository.expanditures=malloc(sizeof(expanditure) * 10);
+    repository.v=createVect();
+    return repository;
 }
+
+
 /* removes the item at the position wanted
     returns 1 if sucessfull, 0 if not
 */
 int removeFromIndex(repository *repo,int position)
 {
-    if(repo->length==0)
+    if(repo->v.length==0)
     {
         return 0;
     }
-    if(position<0 || position>=repo->length){
+    if(position<0 || position>=repo->v.length){
         return 0;
     }
-    if(position==0 && repo->length==1)
+    if(position==0 && repo->v.length==1)
     {
         printf("removed primu boss");
-        repo->length--;
+        repo->v.length--;
         return 1;
     }
     int i;
-    for (i=position; i<repo->length-1; i++)
+    for (i=position; i<repo->v.length-1; i++)
     {
-        repo->expanditures[i]=repo->expanditures[i+1];
+        repo->v.expanditures[i]=repo->v.expanditures[i+1];
     }
-    repo->length--;
+    repo->v.length--;
     return 1;
 }
 
+void fixSize(repository *repo,int newLength)
+{
+
+    expanditure *newExpanditures=malloc(sizeof(repository)*newLength);
+    int i;
+    for(i=0;i<repo->v.length; i++)
+    {
+        newExpanditures[i]=repo->v.expanditures[i];
+    }
+    free(repo->v.expanditures);
+    repo->v.expanditures=newExpanditures;
+}
 /*adds a new expanditure to repo
 exp.day should be > 0
 exp.money should be > 0
@@ -51,16 +76,18 @@ int addExpanditure(repository *repo,expanditure exp)
 {
     if(!validateExpanditure(exp))
         return 0;
-    repo->expanditures[repo->length++]=exp;
+    fixSize(repo,repo->v.length+1);
+    repo->v.expanditures[repo->v.length++]=exp;
     return 1;
 }
+
 /*
 modifies the expanditure at the desired position.
 returns 0 or 1 (fail/success)
 */
 int modifyExpanditure(repository *repo,expanditure newExpanditure,int position)
 {
-    if(position<0 || position>=repo->length){
+    if(position<0 || position>=repo->v.length){
         return 0;
     }
     if(!validateExpanditure(newExpanditure))
@@ -68,7 +95,7 @@ int modifyExpanditure(repository *repo,expanditure newExpanditure,int position)
         return 0;
     }
     else{
-        repo->expanditures[position]=newExpanditure;
+        repo->v.expanditures[position]=newExpanditure;
     }
 }
 /*

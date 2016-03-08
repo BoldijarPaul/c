@@ -9,98 +9,98 @@ typedef struct
 
 
 /* returns a repository of expanditures of selected type, from a selected repository */
-repository getExpandituresOfType(int type,repository repo)
+vect getExpandituresOfType(int type,repository repo)
 {
-    repository newRepo;
-    newRepo.length=0;
+    vect v = createVect();
+    v.length=0;
     int i;
-    for(i=0; i<repo.length; i++)
+    for(i=0; i<repo.v.length; i++)
     {
-        if(repo.expanditures[i].type==type)
+        if(repo.v.expanditures[i].type==type)
         {
-            newRepo.expanditures[newRepo.length]=repo.expanditures[i];
-            newRepo.length++;
+            v.expanditures[v.length]=repo.v.expanditures[i];
+            v.length++;
         }
     }
-    return newRepo;
+    return v;
 }
 
 
 /* returns a repository of expanditures sorted by sum, ascending or descending (1 or 0) */
-repository getSortedRepoBySum(repository repo,int ascending)
+vect getSortedRepoBySum(repository repo,int ascending)
 {
-    repository newRepo;
-    newRepo.length=0;
+    vect v=createVect();
+    v.length=0;
     int i,j;
-    for(i=0; i<repo.length; i++)
+    for(i=0; i<repo.v.length; i++)
     {
-        newRepo.expanditures[newRepo.length]=repo.expanditures[i];
-        newRepo.length++;
+        v.expanditures[v.length]=repo.v.expanditures[i];
+        v.length++;
     }
 
-    for(i=0; i<newRepo.length-1; i++)
+    for(i=0; i<v.length-1; i++)
     {
-        for(j=i+1; j<newRepo.length; j++)
+        for(j=i+1; j<v.length; j++)
         {
             if(ascending)
             {
-                if(newRepo.expanditures[i].money>newRepo.expanditures[j].money)
+                if(v.expanditures[i].money>v.expanditures[j].money)
                 {
-                    expanditure aux=newRepo.expanditures[i];
-                    newRepo.expanditures[i]=newRepo.expanditures[j];
-                    newRepo.expanditures[j]=aux;
+                    expanditure aux=v.expanditures[i];
+                    v.expanditures[i]=v.expanditures[j];
+                    v.expanditures[j]=aux;
                 }
             }else
             {
-                if(newRepo.expanditures[i].money<newRepo.expanditures[j].money)
+                if(v.expanditures[i].money<v.expanditures[j].money)
                 {
-                    expanditure aux=newRepo.expanditures[i];
-                    newRepo.expanditures[i]=newRepo.expanditures[j];
-                    newRepo.expanditures[j]=aux;
+                    expanditure aux=v.expanditures[i];
+                    v.expanditures[i]=v.expanditures[j];
+                    v.expanditures[j]=aux;
                 }
             }
         }
     }
 
-    return newRepo;
+    return v;
 }
 
 /* returns a repository of expanditures sorted by type, ascending or descending (1 or 0) */
-repository getSortedRepoByType(repository repo,int ascending)
+vect getSortedRepoByType(repository repo,int ascending)
 {
-    repository newRepo;
-    newRepo.length=0;
+    vect v=createVect();
+    v.length=0;
     int i,j;
-    for(i=0; i<repo.length; i++)
+    for(i=0; i<v.length; i++)
     {
-        newRepo.expanditures[newRepo.length]=repo.expanditures[i];
-        newRepo.length++;
+        v.expanditures[v.length]=v.expanditures[i];
+        v.length++;
     }
 
-    for(i=0; i<newRepo.length-1; i++)
+    for(i=0; i<v.length-1; i++)
     {
-        for(j=i+1; j<newRepo.length; j++)
+        for(j=i+1; j<v.length; j++)
         {
             if(ascending)
             {
-                if(newRepo.expanditures[i].type>newRepo.expanditures[j].type)
+                if(v.expanditures[i].type>v.expanditures[j].type)
                 {
-                    expanditure aux=newRepo.expanditures[i];
-                    newRepo.expanditures[i]=newRepo.expanditures[j];
-                    newRepo.expanditures[j]=aux;
+                    expanditure aux=v.expanditures[i];
+                    v.expanditures[i]=v.expanditures[j];
+                    v.expanditures[j]=aux;
                 }
             }else
             {
-                if(newRepo.expanditures[i].type<newRepo.expanditures[j].type)
+                if(v.expanditures[i].type<v.expanditures[j].type)
                 {
-                    expanditure aux=newRepo.expanditures[i];
-                    newRepo.expanditures[i]=newRepo.expanditures[j];
-                    newRepo.expanditures[j]=aux;
+                    expanditure aux=v.expanditures[i];
+                    v.expanditures[i]=v.expanditures[j];
+                    v.expanditures[j]=aux;
                 }
             }
         }
     }
 
-    return newRepo;
+    return v;
 }
 

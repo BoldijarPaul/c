@@ -48,7 +48,7 @@ void showExpandituresOfType(repository repo)
     int type;
     printf("Expanditure type:(Food=1,Transport=2,Phone=3,Clothes=4,Others=5) ");
     scanf("%d",&type);
-    repository newRepo=getExpandituresOfType(type,repo);
+    vect newRepo=getExpandituresOfType(type,repo);
     listExpanditures(newRepo);
 }
 /*
@@ -65,11 +65,11 @@ void addNewExpanditure(repository *repo)
 /*
 list all expanditures from selected repo
 */
-void listExpanditures(repository repo){
+void listExpanditures(vect v){
     int i=0;
-    for(i=0; i<repo.length; i++)
+    for(i=0; i<v.length; i++)
     {
-        printf("ID: %d, DAY: %d, MONEY: %d, TYPE: %s\n",i,repo.expanditures[i].day,repo.expanditures[i].money,TYPES[repo.expanditures[i].type]);
+        printf("ID: %d, DAY: %d, MONEY: %d, TYPE: %s\n",i,v.expanditures[i].day,v.expanditures[i].money,TYPES[v.expanditures[i].type]);
     }
 }
 /* removes a expanditure from repository */
@@ -85,7 +85,8 @@ void removeExpanditure(repository *repo)
 void start(controller *contr)
 {
 
-    contr->repo.length=0;
+
+    contr->repo=createRepo();
     repository repo=contr->repo;
     addExpanditure(&repo,createExpanditure(1,5,1));
     addExpanditure(&repo,createExpanditure(1,0,2));
@@ -100,7 +101,7 @@ void start(controller *contr)
         }
         if(option==2)
         {
-            listExpanditures(repo);
+            listExpanditures(repo.v);
         }
         if(option==3)
         {
